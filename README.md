@@ -21,6 +21,7 @@ A self-hostable image upload API server written in Go. It receives images upload
 - [Putting it behind HTTPS](#putting-it-behind-https)
 - [Data layout & backups](#data-layout--backups)
 - [Security model](#security-model)
+- [Downloads & verifying releases](#downloads--verifying-releases)
 - [Project layout](#project-layout)
 - [Roadmap / known limitations](#roadmap--known-limitations)
 - [Contributing](#contributing)
@@ -215,6 +216,20 @@ Backing up is just backing up this one directory — stop the container, copy `d
 - **Content validation**: the server sniffs actual file bytes (`http.DetectContentType`) rather than trusting the client's declared `Content-Type` or filename extension, and only writes files with a server-chosen extension derived from the sniffed type.
 - **ID generation**: upload and token IDs use `crypto/rand`, not `math/rand` — IDs are not enumerable or predictable.
 - **What this does *not* protect against**: a leaked bearer token grants full upload rights until revoked (there's no per-request scoping or expiry yet — see [Roadmap](#roadmap--known-limitations)). Treat tokens like passwords.
+
+## Downloads & verifying releases
+
+This project does not (yet) publish prebuilt binaries or container images — see [Roadmap](#roadmap--known-limitations). Every [tagged release](https://github.com/Lapius7/clipshot-server/releases) is **source-only**: you build it yourself, either with `docker build`/`docker compose up` or `go build`. There is no separate "official binary" to verify a checksum against, which sidesteps an entire class of "did I download a tampered binary" concerns — but it also means the integrity of what you run depends on the integrity of the source you cloned.
+
+### Verifying the source you cloned
+
+- **Prefer a tagged release over an arbitrary commit.** `git clone` followed by `git checkout v0.1.0` (or whichever tag) gives you a fixed, citable point in history, rather than whatever `main` happens to contain when you clone.
+- **Check the tag is what GitHub says it is.** Tags in this repository are not currently GPG-signed (see [Roadmap](#roadmap--known-limitations)), so "verifying" today means comparing against what's shown on the [Releases page](https://github.com/Lapius7/clipshot-server/releases) and the [commit history](https://github.com/Lapius7/clipshot-server/commits/main) on GitHub itself, rather than cryptographic signature verification.
+- **Read the Dockerfile before trusting `docker build`.** It's short and has no surprises (multi-stage build, `CGO_ENABLED=0`, runs as a non-root user) — worth a skim since it has access to your build context.
+
+### Why no prebuilt container image yet
+
+Publishing to `ghcr.io` requires a CI pipeline that builds and signs images on every tag, which isn't set up yet (see [Roadmap](#roadmap--known-limitations)). Until then, `docker build -t clipshot-server .` from a tagged checkout is the reproducible equivalent — you're building from the same Dockerfile a CI pipeline would, just on your own machine instead of trusting a registry.
 
 ## Project layout
 
