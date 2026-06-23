@@ -106,7 +106,7 @@ docker logs -f clipshot-server   # 初回起動時にブートストラップト
 
 ## ソースから実行する
 
-Go 1.23以上が必要です。CGOもシステムのSQLiteも不要 — `modernc.org/sqlite` は純Go実装のドライバなので、Goが動く環境ならどこでもビルド・実行できます。
+Go 1.25以上が必要です。CGOもシステムのSQLiteも不要 — `modernc.org/sqlite` は純Go実装のドライバなので、Goが動く環境ならどこでもビルド・実行できます。
 
 ```bash
 go build -o clipshot-server ./cmd/server

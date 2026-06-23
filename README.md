@@ -106,7 +106,7 @@ docker logs -f clipshot-server   # grab the bootstrap token on first run
 
 ## Running from source
 
-Requires Go 1.23+. No CGO, no system SQLite — `modernc.org/sqlite` is a pure-Go driver, so this builds and runs anywhere Go does.
+Requires Go 1.25+. No CGO, no system SQLite — `modernc.org/sqlite` is a pure-Go driver, so this builds and runs anywhere Go does.
 
 ```bash
 go build -o clipshot-server ./cmd/server

@@ -1,9 +1,9 @@
 module github.com/Lapius7/clipshot-server
 
-go 1.26.4
+go 1.25.0
 
 require (
-	github.com/Lapius7/go-rataliy_lib v0.0.0-20260623043120-050745249643
+	github.com/Lapius7/go-rataliy_lib v0.0.0-20260623114036-7e389f920507
 	modernc.org/sqlite v1.53.0
 )
 
